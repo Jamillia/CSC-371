@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Wall
+  - Rocket
+  - GoTo
   layers:
   - Default
   - TransparentFX
@@ -15,10 +18,10 @@ TagManager:
   - 
   - 
   - Ground
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Rocket
+  - Feet
+  - Wall
   - 
   - 
   - 

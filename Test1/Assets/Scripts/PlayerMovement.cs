@@ -5,10 +5,11 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
-    public float speed = 50f;
+    public float groundSpeed = 10f;
+    public float airSpeed = 1f;
+    private float airSpeedMultiplier = 1f;
     public float jumpHeight = 5f;
     public float maxVelocity = 10f;
-    public float friction = 10f;
     Rigidbody rb;
     bool isgrounded;
 
@@ -21,28 +22,23 @@ public class PlayerMovement : MonoBehaviour
     {
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
+        Vector3 move = x * transform.right + z * transform.forward;
+        bool jump = Input.GetButtonDown("Jump");
         if (isgrounded)
         {
-            if (getVelSq(rb.velocity) <= maxVelocity * maxVelocity)
+            rb.velocity = move * groundSpeed + rb.velocity.y * transform.up;
+            if (jump)
             {
-                rb.AddRelativeForce((Vector3.right * x + Vector3.forward * z) * speed);
-            } else
-            {
-                rb.AddRelativeForce(-rb.velocity);
+                rb.velocity += transform.up * jumpHeight;
             }
-
-            if (x == 0 && rb.velocity.x != 0)
+        }
+        else
+        {
+            if (Mathf.Abs((move * airSpeed * airSpeedMultiplier +
+                transform.right * rb.velocity.x + transform.forward * rb.velocity.z).magnitude)
+                <= maxVelocity)
             {
-                rb.AddRelativeForce(new Vector3(-friction * rb.velocity.x, 0, 0));
-            }
-            if (z == 0 && rb.velocity.z != 0)
-            {
-                rb.AddRelativeForce(new Vector3(0, 0, -friction * rb.velocity.z));
-            }
-
-            if (Input.GetButtonDown("Jump"))
-            {
-                rb.velocity += Vector3.up * jumpHeight;
+                rb.velocity += move * airSpeed * airSpeedMultiplier;
             }
         }
     }
@@ -61,10 +57,5 @@ public class PlayerMovement : MonoBehaviour
         {
             isgrounded = false;
         }
-    }
-
-    private float getVelSq(Vector3 velocity)
-    {
-        return new Vector3(velocity.x, 0, velocity.z).sqrMagnitude;
     }
 }

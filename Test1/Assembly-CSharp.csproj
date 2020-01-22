@@ -65,6 +65,9 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\MouseLook.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\PlayerShoot.cs" />
+    <Compile Include="Assets\Scripts\RLFollowPlayer.cs" />
+    <Compile Include="Assets\Scripts\RocketMovement.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>E:/Unity/Projects/CSC-371/Test1/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
