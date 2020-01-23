@@ -4,10 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ground
+  - Shootable
   - Wall
-  - Rocket
   - GoTo
+  - Ground
+  - Rocket
   layers:
   - Default
   - TransparentFX
@@ -17,11 +18,11 @@ TagManager:
   - UI
   - 
   - 
-  - Ground
   - Player
+  - Ground
+  - Wall
   - Rocket
   - Feet
-  - Wall
   - 
   - 
   - 
@@ -42,6 +43,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Fire
+    uniqueID: 3804908061
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

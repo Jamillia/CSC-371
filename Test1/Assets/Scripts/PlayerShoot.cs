@@ -7,13 +7,15 @@ public class PlayerShoot : MonoBehaviour
     public GameObject rocket;
     public GameObject cam;
     public GameObject spawnpt;
-
+    public AudioClip shootSound;
+    AudioSource audioSource;
     public float attackSpeed = 0.8f;
     float attackInterval;
     bool canAttack;
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         attackInterval = 0f;
         canAttack = true;
     }
@@ -39,6 +41,7 @@ public class PlayerShoot : MonoBehaviour
                     cam.transform.rotation.eulerAngles.y + 180f,
                     cam.transform.rotation.eulerAngles.z
                 ));
+            audioSource.PlayOneShot(shootSound, 0.1f);
             canAttack = false;
         }
     }

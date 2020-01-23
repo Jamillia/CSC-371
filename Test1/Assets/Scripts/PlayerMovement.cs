@@ -10,11 +10,17 @@ public class PlayerMovement : MonoBehaviour
     private float airSpeedMultiplier = 1f;
     public float jumpHeight = 5f;
     public float maxVelocity = 10f;
+    public float stepInterval = 0.48f;
+    public AudioClip[] footSteps;
+    AudioSource audioSource;
     Rigidbody rb;
     bool isgrounded;
+    float footSoundInterval = 0;
+    int footSoundIndex = 0;
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
     }
 
@@ -24,9 +30,19 @@ public class PlayerMovement : MonoBehaviour
         float z = Input.GetAxis("Vertical");
         Vector3 move = x * transform.right + z * transform.forward;
         bool jump = Input.GetButtonDown("Jump");
+        if (footSoundInterval > 0)
+        {
+            footSoundInterval -= Time.deltaTime;
+        }
         if (isgrounded)
         {
             rb.velocity = move * groundSpeed + rb.velocity.y * transform.up;
+            if ((x != 0 || z != 0) && footSoundInterval <= 0)
+            {
+                audioSource.PlayOneShot(footSteps[footSoundIndex]);
+                footSoundInterval = stepInterval;
+                footSoundIndex = (footSoundIndex + 1) % footSteps.Length;
+            }
             if (jump)
             {
                 rb.velocity += transform.up * jumpHeight;
